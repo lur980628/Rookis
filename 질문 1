@@ -1,0 +1,18 @@
+import requests
+from bs4 import BeautifulSoup
+
+def print_news():
+    url = 'https://news.daum.net/economic'
+    print(f'[Daum 뉴스 - economic]')
+
+    res = requests.get(url)
+    res.encoding = res.apparent_encoding
+    soup = BeautifulSoup(res.text, 'html.parser')
+
+    for li in soup.select('ul.list_newsheadline2 li'):
+        a = li.find('a')
+        title = li.select_one('strong.tit_txt').text.strip()
+        print(a['href'])
+        print(title)
+
+print_news()
