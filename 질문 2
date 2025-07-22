@@ -1,0 +1,28 @@
+import requests
+from bs4 import BeautifulSoup
+
+section_dict = {100:'정치',101:'경제',102:'사회',103:'생활/문화',104:'세계',105:'IT/과학'}
+
+def print_news(sid, section_name):
+    url = f'https://news.naver.com/section/{sid}'
+    print(url)
+    
+    req_header = {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/104.0.0.0 Safari/537.36"
+    }
+
+    response = requests.get(url, headers=req_header)
+    
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        a_tags = soup.select("div.sa_text a[href*='mnews/article']")
+        
+        for a in a_tags:
+            title = a.text.strip()
+            link = a['href']
+            print(link)
+            print(title)
+    else:
+        print(f"Error: status code {response.status_code}")
