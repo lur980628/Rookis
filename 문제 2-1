@@ -1,0 +1,18 @@
+연습문제 2-1
+
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+from IPython.display import Image, display
+
+def nate_news():
+    codes = ['n0100', 'n0201', 'n0300', 'n0400', 'n0502', 'n0600']
+    for code in codes:
+        url = f'https://news.nate.com/recent?mid={code}'
+        soup = BeautifulSoup(requests.get(url).text, 'html.parser')
+        for item in soup.select('ul.type01 li')[:3]:
+            a = item.select_one('a.thumb')
+            if not a: continue
+            print(a['title'], a['href'])
+            img = a.select_one('img')
+            if img: display(Image(url=urljoin('https:', img['src'])))
