@@ -1,0 +1,59 @@
+연습문제 2-1
+
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+from IPython.display import Image, display
+
+def nate_news():
+    codes = ['n0100', 'n0201', 'n0300', 'n0400', 'n0502', 'n0600']
+    for code in codes:
+        url = f'https://news.nate.com/recent?mid={code}'
+        soup = BeautifulSoup(requests.get(url).text, 'html.parser')
+        for item in soup.select('ul.type01 li')[:3]:
+            a = item.select_one('a.thumb')
+            if not a: continue
+            print(a['title'], a['href'])
+            img = a.select_one('img')
+            if img: display(Image(url=urljoin('https:', img['src'])))
+
+연습문제 2-2
+
+import os
+import requests
+from bs4 import BeautifulSoup
+
+def download_webtoon_episode(title, no, url):
+    headers = {
+        'referer': url,
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
+    }
+
+    res = requests.get(url, headers=headers)
+    if not res.ok:
+        print(f'웹툰 페이지 요청 실패: {res.status_code}')
+        return
+
+    soup = BeautifulSoup(res.text, 'html.parser')
+    img_tags = soup.select("img[src*='IMAG01']")  # 고화질 이미지만 선택
+
+    img_urls = [img['src'] for img in img_tags]
+    if not img_urls:
+        print("다운로드할 이미지가 없습니다.")
+        return
+
+    save_dir = os.path.join('img', title, str(no))
+    os.makedirs(save_dir, exist_ok=True)
+
+    for img_url in img_urls:
+        img_data = requests.get(img_url, headers=headers).content
+        filename = os.path.join(save_dir, os.path.basename(img_url))
+        with open(filename, 'wb') as f:
+            f.write(img_data)
+            print(f'Saved: {filename} ({len(img_data):,} bytes)')
+
+download_webtoon_episode(
+    '마음의소리',
+    259,
+    'https://comic.naver.com/webtoon/detail?titleId=747271&no=259&week=thu'
+)
