@@ -1,0 +1,411 @@
+과제 문제 정답모음
+1-1
+a = int(input("첫 번째 숫자를 입력하세요: "))
+b = int(input("두 번째 숫자를 입력하세요: "))
+print(f"{a} + {b} = {a + b}")
+print(f"{a} - {b} = {a - b}")
+print(f"{a} * {b} = {a * b}")
+print(f"{a} / {b} = {a / b:.2f}")
+
+1-2
+r = float(input("원의 반지름을 입력하세요: "))
+pi = 3.14159
+print(f"반지름이 {r}인 원의 넓이: {pi * r**2:.2f}")
+print(f"반지름이 {r}인 원의 둘레: {2 * pi * r:.2f}")
+
+1-3
+c = float(input("섭씨 온도를 입력하세요: "))
+f = c * 9/5 + 32
+print(f"섭씨 {c}도는 화씨 {f:.1f}도입니다.")
+
+1-4
+w = float(input("가로 길이를 입력하세요: "))
+h = float(input("세로 길이를 입력하세요: "))
+print(f"직사각형의 넓이: {w * h}")
+print(f"직사각형의 둘레: {2 * (w + h)}")
+
+1-5
+price = int(input("상품 가격을 입력하세요: "))
+rate = int(input("할인율을 입력하세요(%): "))
+discount = price * rate // 100
+final = price - discount
+print(f"원래 가격: {price}원\n할인율: {rate}%\n할인 금액: {discount}원\n최종 가격: {final}원")
+
+2-1
+name = input("이름을 입력하세요: ")
+age = input("나이를 입력하세요: ")
+print(f"안녕하세요! 제 이름은 {name}이고, 나이는 {age}살입니다.")
+
+2-2
+s = input("문자열을 입력하세요: ")
+print(f"대문자: {s.upper()}\n소문자: {s.lower()}\n문자열 길이: {len(s)}")
+
+2-3
+email = input("이메일 주소를 입력하세요: ")
+user, domain = email.split("@")
+print(f"사용자명: {user}\n도메인: {domain}")
+
+2-4
+s = input("문장을 입력하세요: ").strip()
+print(f"공백 제거: {' '.join(s.split())}\n단어 개수: {len(s.split())}개")
+
+2-5
+text = input("문자열을 입력하세요: ")
+char = input("찾을 문자를 입력하세요: ")
+print(f"문자 '{char}'이 {text.count(char)}번 나타납니다.")
+
+3-1
+nums = [10, 20, 30, 40, 50]
+print(f"숫자들: {nums}\n합계: {sum(nums)}\n평균: {sum(nums)/len(nums)}")
+
+3-2
+fruits = ['사과', '바나나', '오렌지', '포도', '딸기']
+f = input("찾을 과일을 입력하세요: ")
+print(f"'{f}'가 목록에 있습니다!" if f in fruits else f"'{f}'는 목록에 없습니다.")
+
+3-3
+grades = {'김철수': 85, '이영희': 92, '박민수': 78, '최수진': 95}
+print("학생 성적:")
+for name, score in grades.items():
+    print(f"{name}: {score}점")
+print(f"평균 점수: {sum(grades.values())/len(grades):.1f}점")
+
+3-4
+import math
+p1 = (0, 0)
+p2 = (3, 4)
+dist = math.dist(p1, p2)
+print(f"점1: {p1}\n점2: {p2}\n두 점 사이의 거리: {dist}")
+
+3-5
+cart = {'사과': (2, 1000), '바나나': (3, 800), '오렌지': (1, 1500)}
+total = 0
+print("쇼핑 카트:")
+for item, (qty, price) in cart.items():
+    cost = qty * price
+    total += cost
+    print(f"{item}: {qty}개 (개당 {price}원) = {cost}원")
+print(f"총 가격: {total}원")
+
+3-6
+nums = [15, 3, 27, 8, 19, 12, 31]
+print(f"숫자 목록: {nums}")
+print(f"최댓값: {max(nums)}")
+print(f"최솟값: {min(nums)}")
+print(f"두 번째로 큰 값: {sorted(set(nums))[-2]}")
+
+3-7
+words = ['cat', 'elephant', 'dog', 'butterfly', 'ant']
+longest = max(words, key=len)
+shortest = min(words, key=len)
+print(f"가장 긴 단어: {longest} ({len(longest)}글자)")
+print(f"가장 짧은 단어: {shortest} ({len(shortest)}글자)")
+
+3-8
+nums = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]
+unique = sorted(set(nums))
+print(f"원본 리스트: {nums}\n중복 제거 후: {unique}")
+
+3-9
+a = [1, 2, 3, 4, 5]
+b = [4, 5, 6, 7, 8]
+merged = sorted(set(a + b))
+common = list(set(a) & set(b))
+print(f"리스트1: {a}\n리스트2: {b}")
+print(f"병합된 리스트: {merged}")
+print(f"공통 요소: {common}")
+
+3-10
+students = [
+    {'name': '김철수', 'age': 20, 'major': '컴퓨터공학과'},
+    {'name': '박민수', 'age': 21, 'major': '경영학과'},
+    {'name': '이영희', 'age': 22, 'major': '영어영문학과'},
+    {'name': '최수진', 'age': 23, 'major': '수학과'}
+]
+sorted_students = sorted(students, key=lambda x: x['age'])
+print("나이 순으로 정렬된 학생 목록:")
+for s in sorted_students:
+    print(f"{s['name']} ({s['age']}세) - {s['major']}")
+
+4-1
+age = 20
+if age >= 19:
+    print("성인입니다.")
+else:
+    print("미성년자입니다.")
+
+4-2
+num = 7
+if num % 2 == 0:
+    print("짝수입니다.")
+else:
+    print("홀수입니다.")
+
+4-3
+a, b, c = 12, 45, 33
+print(f"가장 큰 수는 {max(a, b, c)}입니다.")
+
+4-4
+for i in range(1, 6):
+    print(f"{i}번째 반복입니다.")
+
+4-5
+i = 1
+while i <= 5:
+    print(f"{i}번째 반복입니다.")
+    i += 1
+
+4-6
+dan = 3
+for i in range(1, 10):
+    print(f"{dan} x {i} = {dan * i}")
+
+4-7
+total = sum(i for i in range(1, 101) if i % 2 == 0)
+print(f"1부터 100까지 짝수의 합: {total}")
+
+4-8
+n = 5
+for i in range(1, n + 1):
+    print("*" * i)
+
+4-9
+import random
+target = random.randint(1, 10)
+guess = 5
+if guess == target:
+    print("정답입니다!")
+else:
+    print(f"틀렸습니다. 정답은 {target}였습니다.")
+
+4-10
+n = 5
+fact = 1
+for i in range(1, n + 1):
+    fact *= i
+print(f"{n}! = {fact}")
+
+5-1
+def hello():
+    print("안녕하세요!")
+
+hello()
+
+5-2
+def add(a, b):
+    return a + b
+
+print(f"3 + 5 = {add(3, 5)}")
+
+5-3
+def max_of_three(a, b, c):
+    return max(a, b, c)
+
+print(f"가장 큰 수: {max_of_three(10, 40, 30)}")
+
+5-4
+def factorial(n):
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+print(f"6! = {factorial(6)}")
+
+5-5
+with open("sample_output.txt", "w", encoding="utf-8") as f:
+    f.write("이 파일은 연습용으로 저장한 텍스트입니다.\n")
+
+5-6
+with open("sample_output.txt", "r", encoding="utf-8") as f:
+    content = f.read()
+    print("파일 내용:\n" + content)
+
+5-7
+lines = ["첫 번째 줄\n", "두 번째 줄\n", "세 번째 줄\n"]
+with open("lines_output.txt", "w", encoding="utf-8") as f:
+    f.writelines(lines)
+
+5-8
+with open("lines_output.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        print(line.strip())
+
+6-1
+def add(a, b): return a + b
+def subtract(a, b): return a - b
+def multiply(a, b): return a * b
+def divide(a, b): return a / b
+
+a, b = 10, 5
+print(f"{a} + {b} = {add(a, b)}")
+print(f"{a} - {b} = {subtract(a, b)}")
+print(f"{a} * {b} = {multiply(a, b)}")
+print(f"{a} / {b} = {divide(a, b)}")
+
+6-2
+def factorial_recursive(n):
+    return 1 if n == 0 else n * factorial_recursive(n - 1)
+
+def factorial_iterative(n):
+    result = 1
+    for i in range(2, n+1):
+        result *= i
+    return result
+
+for n in [5, 7]:
+    print(f"{n}! (재귀) = {factorial_recursive(n)}")
+    print(f"{n}! (반복) = {factorial_iterative(n)}")
+
+6-3
+def greeting(name="John", message="Hello"):
+    print(f"{message}, {name}님!")
+
+greeting("김철수", "안녕하세요")
+greeting()  # 기본값
+greeting("이영희", "안녕하세요! 좋은 하루 되세요")
+
+6-4
+import statistics
+
+nums = [10, 20, 30, 40, 50]
+print("숫자들:", nums)
+print("평균:", statistics.mean(nums))
+print("최댓값:", max(nums))
+print("최솟값:", min(nums))
+print("표준편차:", round(statistics.stdev(nums), 2))
+
+6-5
+students = [("김철수", 85), ("이영희", 92), ("박민수", 78), ("최수진", 95)]
+print("학생 정보:", students)
+print("이름순 정렬:", sorted(students))
+print("점수순 정렬:", sorted(students, key=lambda x: x[1]))
+print("점수 내림차순:", sorted(students, key=lambda x: x[1], reverse=True))
+
+7-1
+lines = ["안녕하세요", "파이썬 파일 처리를 연습하고 있습니다", "오늘은 좋은 날씨입니다"]
+
+with open("example.txt", "w", encoding="utf-8") as f:
+    f.write('\n'.join(lines))
+
+print("파일에서 읽어온 내용:")
+with open("example.txt", "r", encoding="utf-8") as f:
+    print(f.read())
+
+7-2
+import csv
+
+grades = [("김철수", 85), ("이영희", 92), ("박민수", 78), ("최수진", 95)]
+
+with open("grades.csv", "w", newline='', encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerows(grades)
+
+print("학생 성적이 grades.csv에 저장되었습니다.\n\n성적 분석 결과:")
+total = 0
+with open("grades.csv", "r", encoding="utf-8") as f:
+    reader = csv.reader(f)
+    for row in reader:
+        name, score = row[0], int(row[1])
+        print(f"{name}: {score}점")
+        total += score
+
+print(f"전체 평균: {total / len(grades)}점")
+
+7-3
+from collections import Counter
+
+text = "파이썬 프로그래밍 언어는 배우기 쉬운 강력한 언어입니다. 파이썬은 프로그래밍에 적합합니다. 파이썬!"
+words = text.replace('.', '').replace('!', '').split()
+freq = Counter(words)
+
+print("단어 빈도 분석 결과:")
+for word, count in freq.items():
+    print(f"{word}: {count}번")
+
+7-4
+import json
+
+data = {
+    "이름": "김철수",
+    "나이": 25,
+    "직업": "개발자",
+    "취미": ["독서", "영화감상", "코딩"],
+    "주소": "서울시 강남구"
+}
+
+with open("data.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+
+print("JSON에서 읽어온 데이터:")
+with open("data.json", "r", encoding="utf-8") as f:
+    loaded = json.load(f)
+    for k, v in loaded.items():
+        print(f"{k}: {v}")
+
+7-5
+logs = [
+    "2025-07-20 10:30:00 - ERROR - 데이터베이스 연결 실패",
+    "2025-07-20 11:45:00 - ERROR - 파일을 찾을 수 없음",
+    "2025-07-20 09:15:00 - WARNING - 메모리 사용량이 높습니다",
+    "2025-07-20 12:00:00 - WARNING - 디스크 공간 부족"
+]
+
+with open("log.txt", "w", encoding="utf-8") as f:
+    f.write('\n'.join(logs))
+
+print("ERROR 레벨 로그들:")
+for log in logs:
+    if "ERROR" in log:
+        print(log)
+
+print("\nWARNING 레벨 로그들:")
+for log in logs:
+    if "WARNING" in log:
+        print(log)
+
+8-1
+import math
+
+def circle_area(r): return round(math.pi * r * r, 2)
+def rectangle_area(w, h): return w * h
+def factorial(n): return math.factorial(n)
+def gcd(a, b): return math.gcd(a, b)
+
+import math_operations as mo
+
+print("원의 넓이:", mo.circle_area(5))
+print("직사각형 넓이:", mo.rectangle_area(10, 5))
+print("팩토리얼 5! =", mo.factorial(5))
+print("최대공약수(48, 18) =", mo.gcd(48, 18))
+
+8-2
+import datetime, random
+
+now = datetime.datetime.now()
+print("현재 날짜와 시간:", now)
+print("포맷된 날짜:", now.strftime("%Y년 %m월 %d일 %A"))
+
+fruits = ["사과", "바나나", "딸기", "포도", "오렌지"]
+print("임의의 숫자:", random.randint(1, 10))
+print("임의의 실수:", round(random.uniform(1, 5), 2))
+print("임의의 리스트 요소:", random.choice(fruits))
+random.shuffle(fruits)
+print("섞인 리스트:", fruits)
+
+8-3
+import os, sys
+
+print("현재 작업 디렉토리:", os.getcwd())
+print("Python 버전:", sys.version.split()[0])
+print("운영체제:", os.name)
+print("환경 변수 PATH 일부:", os.environ.get("PATH", "")[:30])
+
+path = "/Users/username/documents/report.txt"
+dirname, filename = os.path.split(path)
+name, ext = os.path.splitext(filename)
+print("파일 경로 정보:")
+print("-", "디렉토리:", dirname)
+print("-", "파일명:", name)
+print("-", "확장자:", ext)
+print("파일 존재 여부:", os.path.exists(path))
