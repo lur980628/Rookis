@@ -1,0 +1,34 @@
+연습문제 3
+
+3-1
+def save_books_to_json(query, filename='data/books.json'):
+    items = search_books(query)
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(items, f, ensure_ascii=False, indent=4)
+    print(f"📁 저장 완료: {filename}")
+
+3-2
+def load_books_to_df(filename='data/books.json'):
+    with open(filename, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    df = pd.DataFrame(data)
+    return df
+
+3-3
+def print_all_books(df):
+    pd.set_option('display.max_columns', None)
+    print(df[['title', 'author', 'discount', 'publisher', 'pubdate']])
+
+3-4
+def print_books_over_20000(df):
+    df_filtered = df[df['discount'].astype(int) >= 20000]
+    df_sorted = df_filtered[['title', 'author', 'discount', 'publisher', 'pubdate']] \
+        .sort_values(by='discount', ascending=False).reset_index(drop=True)
+    print(df_sorted)
+
+3-5
+def print_books_by_publisher(df, publisher_name='인피니티북스'):
+    df_filtered = df[df['publisher'] == publisher_name]
+    df_result = df_filtered.drop(columns=['image', 'description'], errors='ignore').reset_index(drop=True)
+    print(df_result)
