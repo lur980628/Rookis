@@ -1,0 +1,115 @@
+연습문제 4(최종본)
+
+import pandas as pd
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import seaborn as sns
+
+# 한글 폰트 설정
+font_path = 'C:\\windows\\Fonts\\malgun.ttf'
+font_prop = fm.FontProperties(fname=font_path).get_name()
+matplotlib.rc('font', family=font_prop)
+matplotlib.rcParams['axes.unicode_minus'] = False
+
+# 1. CSV 파일 로드 및 전처리
+file_path = r'C:\mypython\Python_WebScraping_Analysis\data\인구현황.csv'
+df_all = pd.read_csv(file_path)
+
+# '전국' 데이터 제거 후 복사
+df = df_all.loc[df_all['행정기관'] != '전국'].copy()
+
+# 결측치 확인
+print("\n결측치 확인:")
+print(df.isnull().sum())
+
+# 문자열 → 숫자 변환 (쉼표 제거)
+df['총인구수'] = df['총인구수'].astype(str).str.replace(',', '').astype(int)
+df['세대수'] = df['세대수'].astype(str).str.replace(',', '').astype(int)
+df['남자인구수'] = df['남자인구수'].astype(str).str.replace(',', '').astype(int)
+df['여자인구수'] = df['여자인구수'].astype(str).str.replace(',', '').astype(int)
+
+# 세대당 인구 컬럼 추가
+df['세대당 인구'] = df['총인구수'] / df['세대수']
+
+# 남녀비율 컬럼 추가
+df['남녀비율'] = df['남자인구수'] / df['여자인구수']
+
+# 남초/여초 컬럼 추가
+df['남초여초'] = df['남녀비율'].apply(lambda x: '남초' if x > 1 else '여초')
+
+### 1. 지역별 총인구수 Top5
+print("\n1. 지역별 총인구수 Top5")
+top5_total = df.sort_values(by='총인구수', ascending=False).head(5)
+print(top5_total[['행정기관', '총인구수']])
+
+### 1-1. 지역별 총인구수 Plot
+plt.figure(figsize=(10,5))
+sns.barplot(data=top5_total, x='행정기관', y='총인구수', palette='Blues_d')
+plt.title('지역별 총인구수 Top5')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+### 2. 세대당 인구수 높은 지역 Top5
+print("\n2. 세대당 인구수 높은 지역 Top5")
+top5_house = df.sort_values(by='세대당 인구', ascending=False).head(5)
+print(top5_house[['행정기관', '세대당 인구']])
+
+### 2-1. 지역별 세대당 인구 Plot
+plt.figure(figsize=(10,5))
+sns.barplot(data=top5_house, x='행정기관', y='세대당 인구', palette='Oranges')
+plt.title('세대당 인구수 높은 지역 Top5')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+### 3. 남녀 비율 분석
+print("\n3. 남녀 비율 분석")
+plt.figure(figsize=(10,5))
+sns.barplot(data=df.sort_values(by='남녀비율', ascending=False), x='행정기관', y='남녀비율', palette='coolwarm')
+plt.axhline(1, color='red', linestyle='--', label='기준선(1)')
+plt.title('지역별 남녀 비율')
+plt.xticks(rotation=90)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+### 4. 남초 vs 여초 지역 구분
+print("\n4. 남초 vs 여초 지역 구분")
+print(df[['행정기관', '남자인구수', '여자인구수', '남녀비율', '남초여초']])
+
+### 5. 세대당 인구 평균보다 높은 지역
+평균_세대당_인구 = df['세대당 인구'].mean()
+print("\n5. 세대당 인구 평균보다 높은 지역 (평균값: {:.2f})".format(평균_세대당_인구))
+above_avg = df[df['세대당 인구'] > 평균_세대당_인구]
+print(above_avg[['행정기관', '세대당 인구']])
+
+### 5-1. 남초 vs 여초 개수 Plot
+plt.figure(figsize=(6,4))
+sns.countplot(data=df, x='남초여초', palette='Set2')
+plt.title('남초 vs 여초 지역 개수')
+plt.tight_layout()
+plt.show()
+
+### 지역별 세대수 Plot
+plt.figure(figsize=(10,5))
+df_sorted_house = df.sort_values(by='세대수', ascending=False)
+sns.barplot(data=df_sorted_house.head(10), x='행정기관', y='세대수', palette='Purples')
+plt.title('지역별 세대수 Top10')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+### 6. 남자 인구 vs 여자 인구 비교 Plot
+plt.figure(figsize=(12,6))
+df_sorted = df.sort_values(by='총인구수', ascending=False)
+x = range(len(df_sorted))
+
+plt.bar(x, df_sorted['남자인구수'], width=0.4, label='남자', align='edge', color='blue')
+plt.bar(x, df_sorted['여자인구수'], width=-0.4, label='여자', align='edge', color='pink')
+plt.xticks(ticks=x, labels=df_sorted['행정기관'], rotation=90)
+plt.title('남자 인구 vs 여자 인구 비교')
+plt.legend()
+plt.tight_layout()
+plt.show()
