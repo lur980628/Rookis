@@ -1,0 +1,52 @@
+# 배경 이미지 설정 (강아지+고양이 일러스트)
+st.markdown("""
+<style>
+/* 전체 앱 배경 설정 */
+.stApp {
+    background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+                      url("https://cdn.pixabay.com/photo/2023/01/30/05/14/pink-7754670_1280.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    color: black;
+    transition: background-size 0.5s ease-in-out;
+}
+
+/* 사이드바에 들어갈 이미지 스타일 */
+.sidebar-img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* 화면 크기 줄어들면 이미지 위치 조정 */
+@media (max-width: 768px) {
+    .stApp {
+        background-position: top;
+        background-size: cover;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
+
+# 사이드바에 이미지 추가
+st.markdown("""
+<style>
+/* 사이드바 배경 이미지 */
+[data-testid="stSidebar"] {
+    background-image: url("https://cdn.pixabay.com/photo/2023/01/30/05/14/pink-7754670_1280.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;  /* 텍스트 색상 흰색으로 */
+}
+
+/* 사이드바 내부 콘텐츠 여백 및 텍스트 가독성 확보 */
+[data-testid="stSidebar"] > div {
+    background-color: rgba(0,0,0,0.1);  /* 반투명 검정 배경 추가 */
+    padding: 1rem;
+    border-radius: 10px;
+}
+</style>
+""", unsafe_allow_html=True)
