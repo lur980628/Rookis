@@ -1,5 +1,6 @@
 import streamlit as st
 import folium
+from folium.plugins import MarkerCluster # MarkerCluster 임포트
 from streamlit_folium import st_folium
 import pandas as pd
 import sys, os
@@ -30,6 +31,10 @@ def show(filtered_shelters, filtered_animals, tab_labels):
     # folium 지도 생성
     map_obj = folium.Map(location=map_center, zoom_start=7)
 
+    # MarkerCluster 객체 생성 및 지도에 추가
+    # 이 객체에 마커들을 추가하면 자동으로 클러스터링됩니다.
+    marker_cluster = MarkerCluster().add_to(map_obj) # 여기에 추가!
+
     # 마커 추가
     for _, row in filtered_shelters.iterrows():
         if pd.notna(row['lat']) and pd.notna(row['lon']):
@@ -46,7 +51,7 @@ def show(filtered_shelters, filtered_animals, tab_labels):
                 popup=popup_html,
                 tooltip=row['shelter_name'],
                 icon=folium.Icon(color="blue", icon="paw", prefix='fa')
-            ).add_to(map_obj)
+            ).add_to(marker_cluster) # map_obj 대신 marker_cluster에 추가!
 
     # 지도 렌더링 - rerun 시 발생하는 FileNotFoundError 무시
     map_event = None
@@ -60,6 +65,9 @@ def show(filtered_shelters, filtered_animals, tab_labels):
         map_event = None
 
     # 클릭 이벤트 처리
+    # (MarkerCluster는 클러스터 자체를 클릭하는 이벤트를 직접 제공하지 않고,
+    # 확대/축소를 통해 개별 마커가 드러난 후 마커 클릭 이벤트를 감지하는 방식이 일반적입니다.)
+    # 현재 코드는 개별 마커의 tooltip을 기반으로 보호소 클릭을 처리하고 있으므로 그대로 유지합니다.
     if map_event and map_event.get("last_object_clicked_tooltip"):
         clicked_shelter = map_event["last_object_clicked_tooltip"]
 
